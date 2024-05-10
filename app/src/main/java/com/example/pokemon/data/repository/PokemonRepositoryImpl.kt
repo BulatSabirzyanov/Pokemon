@@ -4,11 +4,9 @@ import com.example.pokemon.data.Pokemon
 import com.example.pokemon.data.mappers.PokemonResultToPokemonMapper
 import com.example.pokemon.data.remote.PokemonApiService
 import com.example.pokemon.data.remote.responses.PokemonDetailItem
-import com.example.pokemon.data.remote.responses.PokemonResult
 import com.example.pokemon.domain.PokemonRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 internal class PokemonRepositoryImpl @Inject constructor(
