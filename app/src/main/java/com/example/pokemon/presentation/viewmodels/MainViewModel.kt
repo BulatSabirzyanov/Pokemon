@@ -1,35 +1,14 @@
 package com.example.pokemon.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.pokemon.domain.usecase.GetAllPokemonUseCase
-import com.example.pokemon.presentation.PokemonState
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import com.example.pokemon.presentation.screens.Screens
+import com.github.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val getAllPokemonUseCase: GetAllPokemonUseCase) : ViewModel() {
+class MainViewModel @Inject constructor(private val router: Router) : ViewModel() {
 
-    private val _pokemonState = MutableStateFlow<PokemonState>(PokemonState.Loading)
-    val pokemonState: StateFlow<PokemonState> = _pokemonState.asStateFlow()
-
-    init {
-        loadAllPokemon()
+    fun init() {
+        router.replaceScreen(Screens.pokemonListFragment())
     }
 
-    private fun loadAllPokemon() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _pokemonState.value = PokemonState.Loading
-            try {
-                getAllPokemonUseCase.getAllPokemon().collect { pokemon ->
-                    _pokemonState.value = PokemonState.Success(pokemon)
-                }
-            } catch (e: Exception) {
-                _pokemonState.value = PokemonState.Error(e.message)
-            }
-        }
-    }
 }

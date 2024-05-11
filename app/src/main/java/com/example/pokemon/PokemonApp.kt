@@ -16,7 +16,6 @@ class PokemonApp : Application() {
 
     private fun createAppComponent(): AppComponent {
         return DaggerAppComponent.builder()
-            .context(this) // Использовать 'this' для обращения к контексту приложения
             .build()
     }
 }

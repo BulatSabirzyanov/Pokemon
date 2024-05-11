@@ -1,29 +1,27 @@
 package com.example.pokemon.di
 
-import android.content.Context
-import com.example.pokemon.data.mappers.PokemonResultToPokemonMapper
-import com.example.pokemon.domain.PokemonRepository
-import com.example.pokemon.domain.usecase.GetAllPokemonUseCase
-import com.example.pokemon.presentation.screens.MainFragment
-import dagger.BindsInstance
+import com.example.pokemon.presentation.ui.MainActivity
+import com.example.pokemon.presentation.ui.PokemonListFragment
+import com.example.pokemon.presentation.viewmodels.MainViewModel
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.Router
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [DataModule::class, AppModule::class])
+@Component(modules = [NavigationModule::class,DataModule::class, AppModule::class])
 interface AppComponent {
 
-    fun getPokemonRepository(): PokemonRepository
+    fun getRouter(): Router
+    fun getNavigatorHolder(): NavigatorHolder
 
-    fun getAllPokemonUseCase(): GetAllPokemonUseCase
+    fun inject(pokemonListFragment: PokemonListFragment)
 
-    fun getPokemonResultToPokemonMapper(): PokemonResultToPokemonMapper
+    fun inject(mainActivity: MainActivity)
 
-    fun inject(mainFragment: MainFragment)
 
     @Component.Builder
     interface Builder {
-        fun context(@BindsInstance context: Context): Builder
         fun build(): AppComponent
     }
 }

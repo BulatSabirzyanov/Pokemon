@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.swiperefreshlayout.v110)
-    implementation(libs.glide)
+    implementation(libs.coil)
     implementation(libs.dagger)
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
@@ -60,8 +60,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.activity)
+    implementation(libs.cicerone)
     annotationProcessor(libs.compiler)
-    implementation(libs.coil)
+
 
     kapt(libs.dagger.compiler)
 

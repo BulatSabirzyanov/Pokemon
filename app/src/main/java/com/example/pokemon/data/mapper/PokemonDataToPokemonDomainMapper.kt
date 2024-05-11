@@ -1,9 +1,10 @@
-package com.example.pokemon.data.mappers
+package com.example.pokemon.data.mapper
 
-import com.example.pokemon.data.Pokemon
+import com.example.pokemon.domain.Pokemon
 import com.example.pokemon.data.remote.responses.PokemonResult
+import javax.inject.Inject
 
-class PokemonResultToPokemonMapper {
+class PokemonDataToPokemonDomainMapper @Inject constructor(){
     fun mapToPokemon(item: PokemonResult): Pokemon {
         return Pokemon(
             name = item.name,

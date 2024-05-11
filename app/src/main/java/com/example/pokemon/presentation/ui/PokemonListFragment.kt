@@ -1,4 +1,4 @@
-package com.example.pokemon.presentation.screens
+package com.example.pokemon.presentation.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,29 +6,29 @@ import androidx.fragment.app.viewModels
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
-import coil.imageLoader
-import coil.request.CachePolicy
-import coil.request.ImageRequest
-import coil.size.ViewSizeResolver
+import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.PokemonApp
 import com.example.pokemon.R
-import com.example.pokemon.data.Pokemon
+import com.example.pokemon.domain.Pokemon
 import com.example.pokemon.databinding.FragmentMainBinding
-import com.example.pokemon.presentation.PokemonState
+import com.example.pokemon.presentation.states.PokemonListState
 import com.example.pokemon.presentation.adapter.OnItemClickListener
 import com.example.pokemon.presentation.adapter.PokemonAdapter
-import com.example.pokemon.presentation.viewmodels.MainViewModel
+import com.example.pokemon.presentation.screens.Screens
+import com.example.pokemon.presentation.viewmodels.PokemonListViewModel
 import com.example.pokemon.presentation.viewmodels.ViewModelFactory
+import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainFragment : Fragment(R.layout.fragment_main),OnItemClickListener {
+class PokemonListFragment : Fragment(R.layout.fragment_main),OnItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+    @Inject
+    lateinit var router: Router
+    private val viewModel: PokemonListViewModel by viewModels { viewModelFactory }
     private lateinit var binding: FragmentMainBinding
     private lateinit var pokemonAdapter: PokemonAdapter
 
@@ -42,27 +42,40 @@ class MainFragment : Fragment(R.layout.fragment_main),OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pokemonAdapter = PokemonAdapter(this@MainFragment)
+        pokemonAdapter = PokemonAdapter(this)
         (requireActivity().application as PokemonApp).appComponent.inject(this)
         binding.recycler.adapter = pokemonAdapter
 
+        binding.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollVertically(1)) {
+                    viewModel.loadNextPage()
+                }
+            }
+        })
+
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.pokemonState.collect { state ->
+            viewModel.pokemonListState.collect { state ->
                 when (state) {
-                    is PokemonState.Loading -> handleLoading()
-                    is PokemonState.Success -> handleSuccess(state.pokemonList)
-                    is PokemonState.Error -> handleError(state.message)
+                    is PokemonListState.Loading -> handleLoading()
+                    is PokemonListState.Success -> handleSuccess(state.pokemonList)
+                    is PokemonListState.Error -> handleError(state.message)
                 }
             }
         }
     }
 
     private fun handleLoading() {
-
+        with(binding){
+            progressBar.visibility = View.VISIBLE
+            recycler.visibility = View.GONE
+        }
     }
 
     private fun handleSuccess(pokemonList: List<Pokemon>) {
         with(binding){
+            progressBar.visibility = View.GONE
             recycler.visibility = View.VISIBLE
         }
         pokemonAdapter.submitList(pokemonList)
@@ -73,6 +86,14 @@ class MainFragment : Fragment(R.layout.fragment_main),OnItemClickListener {
     }
 
     override fun onItemClick(item: Any) {
-        TODO("Not yet implemented")
+        if (item is Pokemon) {
+            router.navigateTo(Screens.pokemonDetailScreen(item.name))
+        }
+    }
+
+    companion object {
+        fun newInstance(): Fragment {
+            return PokemonListFragment()
+        }
     }
 }

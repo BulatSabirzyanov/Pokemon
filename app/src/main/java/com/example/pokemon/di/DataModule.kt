@@ -1,12 +1,12 @@
 package com.example.pokemon.di
 
-import com.example.pokemon.data.mappers.PokemonResultToPokemonMapper
+import com.example.pokemon.data.mapper.PokemonDataToPokemonDomainMapper
 import com.example.pokemon.data.remote.PokemonApiService
 import com.example.pokemon.data.remote.PokemonService
 import com.example.pokemon.data.repository.PokemonRepositoryImpl
-import com.example.pokemon.data.usecase.GetAllPokemonUseCaseImpl
+import com.example.pokemon.domain.usecases.GetAllPokemonUseCaseImpl
 import com.example.pokemon.domain.PokemonRepository
-import com.example.pokemon.domain.usecase.GetAllPokemonUseCase
+import com.example.pokemon.domain.usecases.GetAllPokemonUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -22,15 +22,9 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providePokemonResultToPokemonMapper(): PokemonResultToPokemonMapper {
-        return PokemonResultToPokemonMapper()
-    }
-
-    @Provides
-    @Singleton
     fun providePokemonRepository(
         remoteSource: PokemonApiService,
-        pokemonResultToPokemonMapper: PokemonResultToPokemonMapper
+        pokemonResultToPokemonMapper: PokemonDataToPokemonDomainMapper
     ): PokemonRepository {
         return PokemonRepositoryImpl(
             remoteSource,
