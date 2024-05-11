@@ -14,6 +14,6 @@ class PokemonResultToPokemonMapper {
     private fun getImageUrlFromApiUrl(apiUrl: String): String {
         val pokemonIdPattern = """/(\d+)/""".toRegex()
         val pokemonId = pokemonIdPattern.find(apiUrl)?.groupValues?.get(1) ?: return ""
-        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokemonId.png"
+        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png"
     }
 }

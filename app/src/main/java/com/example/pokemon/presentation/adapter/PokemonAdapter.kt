@@ -1,6 +1,7 @@
 package com.example.pokemon.presentation.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.Coil
+import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
+import com.example.pokemon.R
 import com.example.pokemon.data.Pokemon
 import com.example.pokemon.databinding.PokemonListItemBinding
 
@@ -45,39 +55,11 @@ class PokemonAdapter(private val listener: OnItemClickListener) : ListAdapter<Po
 
         fun bind(item: Pokemon) {
             with(binding) {
-                progressBar.visibility = View.VISIBLE
-                cardImage.visibility = View.GONE
-
+                textView.text = item.name
                 Glide.with(itemView.context)
                     .load(item.url)
-                    .timeout(30 * 1000)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            progressBar.visibility = View.GONE
-                            cardImage.visibility = View.VISIBLE
-                            return false
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            progressBar.visibility = View.GONE
-                            cardImage.visibility = View.VISIBLE
-                            return false
-                        }
-                    })
-                    .into(cardImage)
-
-                cardTitle.text = item.name
+                    .apply(RequestOptions.centerCropTransform())
+                    .into(imageView)
             }
         }
     }

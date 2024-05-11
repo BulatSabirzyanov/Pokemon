@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.activity)
     annotationProcessor(libs.compiler)
+    implementation(libs.coil)
 
     kapt(libs.dagger.compiler)
 

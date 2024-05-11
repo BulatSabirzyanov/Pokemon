@@ -6,7 +6,12 @@ import androidx.fragment.app.viewModels
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
+import coil.imageLoader
+import coil.request.CachePolicy
+import coil.request.ImageRequest
+import coil.size.ViewSizeResolver
 import com.example.pokemon.PokemonApp
 import com.example.pokemon.R
 import com.example.pokemon.data.Pokemon
@@ -37,7 +42,7 @@ class MainFragment : Fragment(R.layout.fragment_main),OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pokemonAdapter = PokemonAdapter(this@MainFragment) // Инициализация здесь
+        pokemonAdapter = PokemonAdapter(this@MainFragment)
         (requireActivity().application as PokemonApp).appComponent.inject(this)
         binding.recycler.adapter = pokemonAdapter
 
@@ -53,15 +58,11 @@ class MainFragment : Fragment(R.layout.fragment_main),OnItemClickListener {
     }
 
     private fun handleLoading() {
-        with(binding){
-            progressBar.visibility = View.VISIBLE
-            recycler.visibility = View.GONE
-        }
+
     }
 
     private fun handleSuccess(pokemonList: List<Pokemon>) {
         with(binding){
-            progressBar.visibility = View.GONE
             recycler.visibility = View.VISIBLE
         }
         pokemonAdapter.submitList(pokemonList)

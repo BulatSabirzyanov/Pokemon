@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokemon.domain.usecase.GetAllPokemonUseCase
 import com.example.pokemon.presentation.PokemonState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +21,7 @@ class MainViewModel @Inject constructor(private val getAllPokemonUseCase: GetAll
     }
 
     private fun loadAllPokemon() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _pokemonState.value = PokemonState.Loading
             try {
                 getAllPokemonUseCase.getAllPokemon().collect { pokemon ->
