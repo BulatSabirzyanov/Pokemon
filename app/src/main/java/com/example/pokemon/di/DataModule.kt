@@ -7,6 +7,8 @@ import com.example.pokemon.data.repository.PokemonRepositoryImpl
 import com.example.pokemon.domain.usecases.GetAllPokemonUseCaseImpl
 import com.example.pokemon.domain.PokemonRepository
 import com.example.pokemon.domain.usecases.GetAllPokemonUseCase
+import com.example.pokemon.domain.usecases.GetPokemonDetailUseCase
+import com.example.pokemon.domain.usecases.GetPokemonDetailUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,7 +18,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providePandaScoreApiService(): PokemonApiService {
+    fun providePokemonApiService(): PokemonApiService {
         return PokemonService.instance
     }
 
@@ -38,6 +40,14 @@ class DataModule {
         repository: PokemonRepository
     ): GetAllPokemonUseCase {
         return GetAllPokemonUseCaseImpl(repository = repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetPokemonDetailUseCase(
+        repository: PokemonRepository
+    ): GetPokemonDetailUseCase {
+        return GetPokemonDetailUseCaseImpl(repository = repository)
     }
 
 }

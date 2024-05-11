@@ -10,15 +10,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.PokemonApp
 import com.example.pokemon.R
-import com.example.pokemon.domain.Pokemon
+import com.example.pokemon.domain.model.Pokemon
 import com.example.pokemon.databinding.FragmentMainBinding
 import com.example.pokemon.presentation.states.PokemonListState
 import com.example.pokemon.presentation.adapter.OnItemClickListener
 import com.example.pokemon.presentation.adapter.PokemonAdapter
-import com.example.pokemon.presentation.screens.Screens
 import com.example.pokemon.presentation.viewmodels.PokemonListViewModel
 import com.example.pokemon.presentation.viewmodels.ViewModelFactory
-import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,8 +24,7 @@ class PokemonListFragment : Fragment(R.layout.fragment_main),OnItemClickListener
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    @Inject
-    lateinit var router: Router
+
     private val viewModel: PokemonListViewModel by viewModels { viewModelFactory }
     private lateinit var binding: FragmentMainBinding
     private lateinit var pokemonAdapter: PokemonAdapter
@@ -49,7 +46,7 @@ class PokemonListFragment : Fragment(R.layout.fragment_main),OnItemClickListener
         binding.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) {
+                if (!recyclerView.canScrollVertically(2)) {
                     viewModel.loadNextPage()
                 }
             }
@@ -69,7 +66,6 @@ class PokemonListFragment : Fragment(R.layout.fragment_main),OnItemClickListener
     private fun handleLoading() {
         with(binding){
             progressBar.visibility = View.VISIBLE
-            recycler.visibility = View.GONE
         }
     }
 
@@ -85,10 +81,8 @@ class PokemonListFragment : Fragment(R.layout.fragment_main),OnItemClickListener
         // Show error message
     }
 
-    override fun onItemClick(item: Any) {
-        if (item is Pokemon) {
-            router.navigateTo(Screens.pokemonDetailScreen(item.name))
-        }
+    override fun onItemClick(item: Pokemon) {
+        viewModel.navigateToDetail(item.name)
     }
 
     companion object {

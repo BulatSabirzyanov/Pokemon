@@ -1,6 +1,6 @@
 package com.example.pokemon.data.remote
 
-import com.example.pokemon.data.remote.responses.PokemonDetailItem
+import com.example.pokemon.data.remote.responses.PokemonDetailApiResponse
 import com.example.pokemon.data.remote.responses.PokemonListItem
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,5 +15,5 @@ interface PokemonApiService {
     ): PokemonListItem
 
     @GET("/api/v2/pokemon/{name}")
-    suspend fun getPokemonDetail(@Path("name") name: String): PokemonDetailItem
+    suspend fun getPokemonDetail(@Path("name") name: String): PokemonDetailApiResponse
 }

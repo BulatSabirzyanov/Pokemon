@@ -1,27 +1,89 @@
 package com.example.pokemon.presentation.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import coil.Coil
+import coil.load
+import com.example.pokemon.PokemonApp
 import com.example.pokemon.R
+import com.example.pokemon.databinding.FragmentDetailBinding
+import com.example.pokemon.domain.model.PokemonDetail
+import com.example.pokemon.presentation.states.PokemonDetailState
 import com.example.pokemon.presentation.viewmodels.PokemonDetailViewModel
 import com.example.pokemon.presentation.viewmodels.ViewModelFactory
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class PokemonDetailFragment : Fragment(R.layout.fragment_detail) {
+class PokemonDetailFragment(private val pokemonName: String) : Fragment(R.layout.fragment_detail) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel: PokemonDetailViewModel by viewModels { viewModelFactory }
+
+    private lateinit var binding: FragmentDetailBinding
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
-    companion object {
-        fun newInstance(name: String): Fragment {
-            return PokemonDetailFragment()
+        (requireActivity().application as PokemonApp).appComponent.inject(this)
+        viewModel.initWithPokemonName(pokemonName)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pokemonDetailState.collect { state ->
+                when (state) {
+                    is PokemonDetailState.Loading -> handleLoading()
+                    is PokemonDetailState.Success -> handleSuccess(state.pokemonDetail)
+                    is PokemonDetailState.Error -> handleError(message = state.message)
+                }
+
+            }
         }
     }
 
+    private fun handleLoading() {
+        with(binding) {
+            container.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+        }
+    }
+
+    private fun handleSuccess(pokemonDetail: PokemonDetail) {
+        with(binding) {
+            container.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+
+            ivDetailPokemon.load(pokemonDetail.imageUrl, Coil.imageLoader(ivDetailPokemon.context))
+            tvPokemonName.text = pokemonDetail.name
+            tVPokemonHpCount.text = pokemonDetail.stat[0].baseStat.toString()
+            tVPokemonAttackCount.text = pokemonDetail.stat[1].baseStat.toString()
+            tVPokemonDefenseCount.text = pokemonDetail.stat[2].baseStat.toString()
+            tVPokemonSpecialAttackCount.text = pokemonDetail.stat[3].baseStat.toString()
+            tVPokemonSpecialDefenseCount.text = pokemonDetail.stat[4].baseStat.toString()
+            tVPokemonBaseExperienceCount.text = pokemonDetail.baseExperience
+            tVPokemonHeightCount.text = pokemonDetail.height
+            tVPokemonWeightCount.text = pokemonDetail.weight
+        }
+
+    }
+
+    private fun handleError(message: String?) {
+        // Show error message
+    }
+
+    companion object {
+        fun newInstance(pokemonName: String): Fragment {
+            return PokemonDetailFragment(pokemonName = pokemonName)
+        }
+    }
 }

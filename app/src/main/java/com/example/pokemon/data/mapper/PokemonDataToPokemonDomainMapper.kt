@@ -1,20 +1,37 @@
 package com.example.pokemon.data.mapper
 
-import com.example.pokemon.domain.Pokemon
+import com.example.pokemon.data.remote.responses.PokemonDetailApiResponse
 import com.example.pokemon.data.remote.responses.PokemonResult
+import com.example.pokemon.domain.model.Pokemon
+import com.example.pokemon.domain.model.PokemonDetail
 import javax.inject.Inject
 
-class PokemonDataToPokemonDomainMapper @Inject constructor(){
-    fun mapToPokemon(item: PokemonResult): Pokemon {
+class PokemonDataToPokemonDomainMapper @Inject constructor() {
+    fun mapToPokemonListItem(item: PokemonResult): Pokemon {
         return Pokemon(
             name = item.name,
-            url = getImageUrlFromApiUrl(item.url)
+            url = getImageUrlWithApiUrl(item.url)
         )
     }
 
-    private fun getImageUrlFromApiUrl(apiUrl: String): String {
+    fun mapToPokemonDetail(item: PokemonDetailApiResponse): PokemonDetail {
+        return PokemonDetail(
+            name = item.name,
+            imageUrl = getImageUrlWithId(item.id),
+            baseExperience = item.baseExperience.toString(),
+            height = item.height.toString(),
+            weight = item.weight.toString(),
+            stat = item.stat
+        )
+    }
+
+    private fun getImageUrlWithApiUrl(apiUrl: String): String {
         val pokemonIdPattern = """/(\d+)/""".toRegex()
         val pokemonId = pokemonIdPattern.find(apiUrl)?.groupValues?.get(1) ?: return ""
+        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png"
+    }
+
+    private fun getImageUrlWithId(pokemonId: Int): String {
         return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png"
     }
 }

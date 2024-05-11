@@ -1,6 +1,6 @@
 package com.example.pokemon.presentation.states
 
-import com.example.pokemon.domain.Pokemon
+import com.example.pokemon.domain.model.Pokemon
 
 sealed class PokemonListState {
     object Loading : PokemonListState()

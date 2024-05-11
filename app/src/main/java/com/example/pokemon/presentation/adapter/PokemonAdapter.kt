@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.Coil
 import coil.load
-import com.example.pokemon.domain.Pokemon
+import com.example.pokemon.domain.model.Pokemon
 import com.example.pokemon.databinding.PokemonListItemBinding
 
 

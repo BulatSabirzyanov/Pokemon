@@ -1,7 +1,7 @@
 package com.example.pokemon.domain.usecases
 
-import com.example.pokemon.data.remote.responses.PokemonDetailItem
+import com.example.pokemon.domain.model.PokemonDetail
 
 interface GetPokemonDetailUseCase {
-    suspend fun getPokemonDetail(name: String): PokemonDetailItem
+    suspend fun getPokemonDetail(name: String): PokemonDetail
 }

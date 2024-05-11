@@ -2,4 +2,13 @@
     <string name="app_name">Pokemon</string>
     <string name="name">name</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pokemon_stat">Stat</string>
+    <string name="pokemon_hit_point">HitPoint</string>
+    <string name="pokemon_attack">Attack</string>
+    <string name="pokemon_defense">Defense</string>
+    <string name="pokemon_special_attack">Special Attack</string>
+    <string name="pokemon_special_defense">Special Defense</string>
+    <string name="pokemon_base_experience">Base Experience</string>
+    <string name="pokemon_height">Height</string>
+    <string name="pokemon_weight">Weight</string>
 </resources>

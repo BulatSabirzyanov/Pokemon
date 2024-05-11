@@ -1,6 +1,6 @@
 package com.example.pokemon.domain.usecases
 
-import com.example.pokemon.domain.Pokemon
+import com.example.pokemon.domain.model.Pokemon
 import kotlinx.coroutines.flow.Flow
 
 interface GetAllPokemonUseCase {
