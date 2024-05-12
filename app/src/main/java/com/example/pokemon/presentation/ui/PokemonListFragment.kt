@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -15,6 +16,7 @@ import com.example.pokemon.R
 import com.example.pokemon.databinding.FragmentMainBinding
 import com.example.pokemon.domain.model.Pokemon
 import com.example.pokemon.presentation.adapter.PokemonAdapter
+import com.example.pokemon.presentation.adapter.VerticalSpaceItemDecoration
 import com.example.pokemon.presentation.states.PokemonListState
 import com.example.pokemon.presentation.viewmodels.PokemonListViewModel
 import com.example.pokemon.presentation.viewmodels.ViewModelFactory
@@ -46,15 +48,21 @@ class PokemonListFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pokemonAdapter = PokemonAdapter { viewModel.navigateToDetail(it.name) }
-        binding.recycler.adapter = pokemonAdapter
-        binding.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) {
-                    viewModel.loadNextPage()
+        val spacingDp = 10f
+        val itemVerticalDecoration = VerticalSpaceItemDecoration(spacingDp)
+        with(binding){
+            recycler.adapter = pokemonAdapter
+            recycler.addItemDecoration(itemVerticalDecoration)
+            recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (!recyclerView.canScrollVertically(1)) {
+                        viewModel.loadNextPage()
+                    }
                 }
-            }
-        })
+            })
+        }
+
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -84,7 +92,7 @@ class PokemonListFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun handleError(message: String?) {
-        // Show error message
+        Toast.makeText(context, message ?: "An unknown error occurred", Toast.LENGTH_LONG).show()
     }
 
     companion object {

@@ -6,207 +6,216 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.PokemonDetailFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/iv_detail_pokemon"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/place_holder_img"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/tv_pokemon_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="TextView"
-            android:layout_marginTop="5dp"
-            android:textSize="@dimen/tv_pokemon_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_detail_pokemon" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tV_pokemon_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/pokemon_stat"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_pokemon_name" />
+            <ImageView
+                android:id="@+id/iv_detail_pokemon"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="80dp"
+                android:src="@drawable/place_holder_img"
+                android:background="@android:color/white"
+                android:elevation="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_hp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/pokemon_hit_point"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_stat" />
+            <TextView
+                android:id="@+id/tv_pokemon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/tv_pokemon_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_detail_pokemon"
+                tools:text="TextView" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_hp_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@+id/tV_pokemon_hp"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_stat"
-            tools:text="60" />
+            <TextView
+                android:id="@+id/tV_pokemon_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/pokemon_stat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_pokemon_name" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_attack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/pokemon_attack"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_hp" />
+            <TextView
+                android:id="@+id/tV_pokemon_hp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/pokemon_hit_point"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_stat" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_attack_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_hp_count"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tV_pokemon_attack"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_hp"
-            tools:text="60" />
+            <TextView
+                android:id="@+id/tV_pokemon_hp_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@+id/tV_pokemon_hp"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_stat"
+                tools:text="60" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_defense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/pokemon_defense"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_attack" />
+            <TextView
+                android:id="@+id/tV_pokemon_attack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/pokemon_attack"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_hp" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_defense_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_attack_count"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tV_pokemon_defense"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_attack"
-            tools:text="60" />
+            <TextView
+                android:id="@+id/tV_pokemon_attack_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_hp_count"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tV_pokemon_attack"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_hp"
+                tools:text="60" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_special_attack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/pokemon_special_attack"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_defense" />
-        <TextView
-            android:id="@+id/tV_pokemon_special_attack_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_defense_count"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tV_pokemon_defense"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_defense"
-            tools:text="60" />
+            <TextView
+                android:id="@+id/tV_pokemon_defense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/pokemon_defense"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_attack" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_special_defense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/pokemon_special_defense"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_attack" />
+            <TextView
+                android:id="@+id/tV_pokemon_defense_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_attack_count"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tV_pokemon_defense"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_attack"
+                tools:text="60" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_special_defense_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_hp_count"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tV_pokemon_attack"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_attack"
-            tools:text="60" />
+            <TextView
+                android:id="@+id/tV_pokemon_special_attack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/pokemon_special_attack"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_defense" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_base_experience"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="48dp"
-            android:text="@string/pokemon_base_experience"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_defense" />
+            <TextView
+                android:id="@+id/tV_pokemon_special_attack_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_defense_count"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tV_pokemon_defense"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_defense"
+                tools:text="60" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_base_experience_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_base_experience"
-            app:layout_constraintStart_toStartOf="@+id/tV_pokemon_base_experience"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_base_experience"
-            tools:text="50" />
+            <TextView
+                android:id="@+id/tV_pokemon_special_defense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/pokemon_special_defense"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_attack" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_height"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="48dp"
-            android:text="@string/pokemon_height"
-            app:layout_constraintStart_toEndOf="@+id/tV_pokemon_base_experience"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_defense" />
+            <TextView
+                android:id="@+id/tV_pokemon_special_defense_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_hp_count"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tV_pokemon_attack"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_attack"
+                tools:text="60" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_height_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tV_pokemon_base_experience_count"
-            app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_height"
-            app:layout_constraintStart_toStartOf="@+id/tV_pokemon_height"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_height"
-            tools:text="50" />
+            <TextView
+                android:id="@+id/tV_pokemon_base_experience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/pokemon_base_experience"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_defense" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_weight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
-            android:text="@string/pokemon_weight"
-            app:layout_constraintStart_toEndOf="@+id/tV_pokemon_height"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_defense" />
+            <TextView
+                android:id="@+id/tV_pokemon_base_experience_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_base_experience"
+                app:layout_constraintStart_toStartOf="@+id/tV_pokemon_base_experience"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_base_experience"
+                tools:text="50" />
 
-        <TextView
-            android:id="@+id/tV_pokemon_weight_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tV_pokemon_base_experience_count"
-            app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_weight"
-            app:layout_constraintStart_toStartOf="@+id/tV_pokemon_weight"
-            app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_weight"
-            tools:text="50" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tV_pokemon_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/pokemon_height"
+                app:layout_constraintStart_toEndOf="@+id/tV_pokemon_base_experience"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_defense" />
 
+            <TextView
+                android:id="@+id/tV_pokemon_height_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tV_pokemon_base_experience_count"
+                app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_height"
+                app:layout_constraintStart_toStartOf="@+id/tV_pokemon_height"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_height"
+                tools:text="50" />
+
+            <TextView
+                android:id="@+id/tV_pokemon_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="48dp"
+                android:text="@string/pokemon_weight"
+                app:layout_constraintStart_toEndOf="@+id/tV_pokemon_height"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_special_defense" />
+
+            <TextView
+                android:id="@+id/tV_pokemon_weight_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tV_pokemon_base_experience_count"
+                app:layout_constraintEnd_toEndOf="@+id/tV_pokemon_weight"
+                app:layout_constraintStart_toStartOf="@+id/tV_pokemon_weight"
+                app:layout_constraintTop_toBottomOf="@+id/tV_pokemon_weight"
+                tools:text="50" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progress_bar"
