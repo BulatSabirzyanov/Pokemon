@@ -1,40 +1,44 @@
 package com.example.pokemon.data.remote.responses
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PokemonDetailApiResponse(
 
-    @SerializedName("id")
+    @SerialName("id")
     val id: Int,
 
-    @SerializedName("name")
+    @SerialName("name")
     val name: String,
 
-    @SerializedName("stats")
+    @SerialName("stats")
     val stat: List<PokemonStat>,
 
-    @SerializedName("base_experience")
+    @SerialName("base_experience")
     val baseExperience: Int,
 
-    @SerializedName("height")
+    @SerialName("height")
     val height: Int,
 
-    @SerializedName("weight")
+    @SerialName("weight")
     val weight: Int
 )
 
+@Serializable
 data class PokemonStat(
-    @SerializedName("base_stat")
+    @SerialName("base_stat")
     val baseStat: Int,
 
-    @SerializedName("effort")
+    @SerialName("effort")
     val effort: Int?,
 
-    @SerializedName("stat")
+    @SerialName("stat")
     val stat: Name
 )
 
+@Serializable
 data class Name(
-    @SerializedName("name")
+    @SerialName("name")
     val name: String
 )

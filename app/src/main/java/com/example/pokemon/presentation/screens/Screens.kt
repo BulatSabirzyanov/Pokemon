@@ -1,6 +1,5 @@
 package com.example.pokemon.presentation.screens
 
-
 import com.example.pokemon.presentation.ui.PokemonDetailFragment
 import com.example.pokemon.presentation.ui.PokemonListFragment
 import com.github.terrakok.cicerone.androidx.FragmentScreen

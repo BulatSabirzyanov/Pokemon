@@ -24,7 +24,8 @@ class PokemonListViewModel @Inject constructor(
     val pokemonListState: StateFlow<PokemonListState> = _pokemonListState.asStateFlow()
 
     private var offset = 0
-    private var pokemonList = mutableListOf<Pokemon>()
+    private var canLoadNext = true
+    private val pokemonList = mutableListOf<Pokemon>()
 
     init {
         loadAllPokemon()
@@ -34,17 +35,17 @@ class PokemonListViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _pokemonListState.value = PokemonListState.Loading
             try {
-                getAllPokemonUseCase.getAllPokemon(limit, offset).collect { newPokemon ->
-                    pokemonList.addAll(newPokemon)
-                    _pokemonListState.value = PokemonListState.Success(pokemonList.toList())
-                    offset += limit
-                }
+                val newPokemons = getAllPokemonUseCase.getAllPokemon(limit, offset)
+                if (newPokemons.isEmpty()) canLoadNext = false
+                pokemonList.addAll(newPokemons)
+                _pokemonListState.value = PokemonListState.Success(pokemonList.toList())
+                offset += limit
+
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
                 _pokemonListState.value = PokemonListState.Error(e.message)
             }
-
         }
     }
 
@@ -53,6 +54,8 @@ class PokemonListViewModel @Inject constructor(
     }
 
     fun loadNextPage() {
-        loadAllPokemon()
+        if (canLoadNext) {
+            loadAllPokemon()
+        }
     }
 }

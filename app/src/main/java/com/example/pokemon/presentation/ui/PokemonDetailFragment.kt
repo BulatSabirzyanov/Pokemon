@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import coil.Coil
 import coil.load
+import coil.request.CachePolicy
 import com.example.pokemon.PokemonApp
 import com.example.pokemon.R
 import com.example.pokemon.databinding.FragmentDetailBinding
@@ -19,14 +22,19 @@ import com.example.pokemon.presentation.viewmodels.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-class PokemonDetailFragment(private val pokemonName: String) : Fragment(R.layout.fragment_detail) {
+class PokemonDetailFragment : Fragment(R.layout.fragment_detail) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel: PokemonDetailViewModel by viewModels { viewModelFactory }
 
     private lateinit var binding: FragmentDetailBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (requireActivity().application as PokemonApp).appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,18 +43,20 @@ class PokemonDetailFragment(private val pokemonName: String) : Fragment(R.layout
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity().application as PokemonApp).appComponent.inject(this)
+        val pokemonName = requireArguments().getString("name", "")
         viewModel.initWithPokemonName(pokemonName)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.pokemonDetailState.collect { state ->
-                when (state) {
-                    is PokemonDetailState.Loading -> handleLoading()
-                    is PokemonDetailState.Success -> handleSuccess(state.pokemonDetail)
-                    is PokemonDetailState.Error -> handleError(message = state.message)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.pokemonDetailState.collect { state ->
+                    when (state) {
+                        is PokemonDetailState.Loading -> handleLoading()
+                        is PokemonDetailState.Success -> handleSuccess(state.pokemonDetail)
+                        is PokemonDetailState.Error -> handleError(message = state.message)
+                    }
                 }
-
             }
         }
     }
@@ -63,7 +73,12 @@ class PokemonDetailFragment(private val pokemonName: String) : Fragment(R.layout
             container.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
 
-            ivDetailPokemon.load(pokemonDetail.imageUrl, Coil.imageLoader(ivDetailPokemon.context))
+            ivDetailPokemon.load(
+                pokemonDetail.imageUrl,
+                Coil.imageLoader(ivDetailPokemon.context)
+            ) {
+                memoryCachePolicy(CachePolicy.ENABLED)
+            }
             tvPokemonName.text = pokemonDetail.name
             tVPokemonHpCount.text = pokemonDetail.stat[0].baseStat.toString()
             tVPokemonAttackCount.text = pokemonDetail.stat[1].baseStat.toString()
@@ -82,8 +97,13 @@ class PokemonDetailFragment(private val pokemonName: String) : Fragment(R.layout
     }
 
     companion object {
-        fun newInstance(pokemonName: String): Fragment {
-            return PokemonDetailFragment(pokemonName = pokemonName)
+        fun newInstance(pokemonName: String): PokemonDetailFragment {
+            val fragment = PokemonDetailFragment()
+            val args = Bundle().apply {
+                putString("name", pokemonName)
+            }
+            fragment.arguments = args
+            return fragment
         }
     }
 }

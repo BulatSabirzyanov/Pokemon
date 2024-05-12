@@ -1,6 +1,5 @@
 package com.example.pokemon.di
 
-
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
@@ -20,5 +19,6 @@ object NavigationModule {
 
     @Provides
     @Singleton
-    fun provideNavigatorHolder(cicerone: Cicerone<Router>): NavigatorHolder = cicerone.getNavigatorHolder()
+    fun provideNavigatorHolder(cicerone: Cicerone<Router>): NavigatorHolder =
+        cicerone.getNavigatorHolder()
 }

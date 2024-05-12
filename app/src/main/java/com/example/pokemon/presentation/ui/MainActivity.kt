@@ -3,7 +3,6 @@ package com.example.pokemon.presentation.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import com.example.pokemon.PokemonApp
 import com.example.pokemon.R
 import com.example.pokemon.presentation.viewmodels.MainViewModel
@@ -23,19 +22,21 @@ class MainActivity : AppCompatActivity() {
         (application as PokemonApp).appComponent.getNavigatorHolder()
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (application as PokemonApp).appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        if (savedInstanceState != null) return
+        viewModel.init()
+    }
+
+    override fun onResumeFragments() {
+        super.onResumeFragments()
         navigatorHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
         navigatorHolder.removeNavigator()
         super.onPause()
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (application as PokemonApp).appComponent.inject(this)
-        setContentView(R.layout.activity_main)
-        viewModel.init()
     }
 }

@@ -1,18 +1,20 @@
 package com.example.pokemon.data.remote.responses
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class PokemonListItem(
-    @SerializedName("count")
+    @SerialName("count")
     val count: Int,
-
-    @SerializedName("results")
+    @SerialName("results")
     val results: List<PokemonResult>
 )
 
-
+@Serializable
 data class PokemonResult(
+    @SerialName("name")
     val name: String,
+    @SerialName("url")
     val url: String
 )

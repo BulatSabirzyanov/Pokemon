@@ -10,5 +10,4 @@ class MainViewModel @Inject constructor(private val router: Router) : ViewModel(
     fun init() {
         router.replaceScreen(Screens.pokemonListFragment())
     }
-
 }

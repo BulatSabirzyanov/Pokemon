@@ -1,9 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("kotlin-parcelize")
+    kotlin("plugin.serialization") version "1.9.24"
     id("kotlin-kapt")
-
 }
 
 android {
@@ -46,6 +45,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.swiperefreshlayout.v110)
@@ -53,17 +53,14 @@ dependencies {
     implementation(libs.dagger)
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
-    implementation(libs.gson)
-    implementation(libs.converter.gson)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.okhttp)
     implementation(libs.retrofit)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.activity)
     implementation(libs.cicerone)
-    implementation(libs.skydoves.progressview)
-    annotationProcessor(libs.compiler)
-
 
     kapt(libs.dagger.compiler)
 

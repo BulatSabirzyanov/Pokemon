@@ -9,7 +9,14 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [NavigationModule::class, DataModule::class, AppModule::class])
+@Component(
+    modules = [
+        NavigationModule::class,
+        NetworkModule::class,
+        ViewModelsModule::class,
+        DomainModule::class
+    ]
+)
 interface AppComponent {
 
     fun getRouter(): Router

@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-interface AppModule{
+interface ViewModelsModule {
     @Binds
     @IntoMap
     @ViewModelKey(PokemonListViewModel::class)
@@ -19,6 +19,7 @@ interface AppModule{
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     fun mainViewModel(viewModel: MainViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(PokemonDetailViewModel::class)

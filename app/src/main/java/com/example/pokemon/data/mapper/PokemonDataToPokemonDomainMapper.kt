@@ -9,6 +9,7 @@ import javax.inject.Inject
 class PokemonDataToPokemonDomainMapper @Inject constructor() {
     fun mapToPokemonListItem(item: PokemonResult): Pokemon {
         return Pokemon(
+            id = getId(item.url),
             name = item.name,
             url = getImageUrlWithApiUrl(item.url)
         )
@@ -27,8 +28,13 @@ class PokemonDataToPokemonDomainMapper @Inject constructor() {
 
     private fun getImageUrlWithApiUrl(apiUrl: String): String {
         val pokemonIdPattern = """/(\d+)/""".toRegex()
-        val pokemonId = pokemonIdPattern.find(apiUrl)?.groupValues?.get(1) ?: return ""
-        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png"
+        val pokemonId = pokemonIdPattern.find(apiUrl)?.groupValues?.get(1)?.toInt() ?: 0
+        return getImageUrlWithId(pokemonId)
+    }
+
+    private fun getId(apiUrl: String): Int {
+        val pokemonIdPattern = """/(\d+)/""".toRegex()
+        return pokemonIdPattern.find(apiUrl)?.groupValues?.get(1)?.toInt() ?: 0
     }
 
     private fun getImageUrlWithId(pokemonId: Int): String {
