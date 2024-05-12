@@ -29,8 +29,8 @@ class PokemonListFragment : Fragment(R.layout.fragment_main) {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel: PokemonListViewModel by viewModels { viewModelFactory }
-    private lateinit var binding: FragmentMainBinding
-    private lateinit var pokemonAdapter: PokemonAdapter
+    private var binding: FragmentMainBinding? = null
+    private var pokemonAdapter: PokemonAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (requireActivity().application as PokemonApp).appComponent.inject(this)
@@ -40,9 +40,9 @@ class PokemonListFragment : Fragment(R.layout.fragment_main) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,7 +50,7 @@ class PokemonListFragment : Fragment(R.layout.fragment_main) {
         pokemonAdapter = PokemonAdapter { viewModel.navigateToDetail(it.name) }
         val spacingDp = 10f
         val itemVerticalDecoration = VerticalSpaceItemDecoration(spacingDp)
-        with(binding){
+        binding?.run {
             recycler.adapter = pokemonAdapter
             recycler.addItemDecoration(itemVerticalDecoration)
             recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -78,17 +78,17 @@ class PokemonListFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun handleLoading() {
-        with(binding) {
+        binding?.run  {
             progressBar.visibility = View.VISIBLE
         }
     }
 
     private fun handleSuccess(pokemonList: List<Pokemon>) {
-        with(binding) {
+        binding?.run  {
             progressBar.visibility = View.GONE
             recycler.visibility = View.VISIBLE
         }
-        pokemonAdapter.submitList(pokemonList)
+        pokemonAdapter?.submitList(pokemonList)
     }
 
     private fun handleError(message: String?) {

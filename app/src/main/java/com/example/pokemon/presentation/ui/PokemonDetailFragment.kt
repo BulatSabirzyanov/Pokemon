@@ -29,7 +29,7 @@ class PokemonDetailFragment : Fragment(R.layout.fragment_detail) {
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel: PokemonDetailViewModel by viewModels { viewModelFactory }
 
-    private lateinit var binding: FragmentDetailBinding
+    private var binding: FragmentDetailBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (requireActivity().application as PokemonApp).appComponent.inject(this)
@@ -39,9 +39,9 @@ class PokemonDetailFragment : Fragment(R.layout.fragment_detail) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
 
@@ -63,14 +63,14 @@ class PokemonDetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun handleLoading() {
-        with(binding) {
+        binding?.run {
             container.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
         }
     }
 
     private fun handleSuccess(pokemonDetail: PokemonDetail) {
-        with(binding) {
+        binding?.run  {
             container.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
 
